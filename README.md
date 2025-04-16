@@ -6,12 +6,12 @@ A Spring Boot application for managing learning concepts, tracking user progress
 
 ## 🏗️ System Architecture
 
-![image](https://github.com/user-attachments/assets/1b562e13-cba2-4fb3-bc85-1fa238b249ef)
+![image](https://github.com/user-attachments/assets/5d89b667-56ea-49c3-bcb6-75f081ee8171)
 ---
 
 ## 🗂️ Entity Relationship Diagram (ERD)
 
-![image](https://github.com/user-attachments/assets/da68238a-5774-4104-9062-aaf5c69963d9)
+![image](https://github.com/user-attachments/assets/906f671f-4401-453c-94b8-6f5c82715ba3)
 
 ## ✨ Features
 
