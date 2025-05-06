@@ -1,11 +1,5 @@
 package com.asem.concept_management_system.Security;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
@@ -17,6 +11,12 @@ import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 //Class for converting roles from user 2 ROLE_user
 @Component
 public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationToken> {
