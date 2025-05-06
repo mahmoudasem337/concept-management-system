@@ -1,0 +1,33 @@
+package com.asem.concept_management_system.Service;
+
+import com.asem.conceptmanagementsystem.Exception.ResourceNotFoundException;
+import com.asem.conceptmanagementsystem.Model.Exercise;
+import com.asem.conceptmanagementsystem.Repository.ExerciseRepository;
+import com.asem.conceptmanagementsystem.DTO.ExerciseSubmissionResponse;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ExerciseService {
+    private final ExerciseRepository exerciseRepository;
+    public ExerciseService(ExerciseRepository exerciseRepository) {
+        this.exerciseRepository = exerciseRepository;
+    }
+
+    public List<Exercise> getExercisesByConceptId(String conceptId) {
+        List<Exercise> exercises = exerciseRepository.findByConceptId(conceptId);
+        if (exercises.isEmpty()) {
+            throw new ResourceNotFoundException("No exercises found for concept with id: " + conceptId);
+        }
+        return exercises;
+    }
+
+    public ExerciseSubmissionResponse submitAnswer(String exerciseId, String answer) {
+        Exercise exercise = exerciseRepository.findById(exerciseId)
+                .orElseThrow(() -> new ResourceNotFoundException("Exercise not found with id: " + exerciseId));
+        boolean isCorrect = answer.equalsIgnoreCase(exercise.getCorrectAnswer());
+        String feedback = isCorrect ? "Correct answer!" : "Incorrect answer. Try again!";
+        return new ExerciseSubmissionResponse(isCorrect, feedback);
+    }
+} 

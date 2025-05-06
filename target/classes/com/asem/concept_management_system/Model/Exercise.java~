@@ -1,0 +1,81 @@
+package com.asem.conceptmanagementsystem.Model;
+
+import java.util.List;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+
+@Document(collection = "exercises")
+public class Exercise {
+    @Id
+    private String id;
+
+    @Field("concept_id")
+    @NotBlank(message = "Concept ID is required")
+    private String conceptId;
+
+    @NotBlank(message = "Question is required")
+    private String question;
+
+    @NotEmpty(message = "Options list cannot be empty")
+    private List<String> options;
+
+    @NotBlank(message = "Correct answer is required")
+    private String correctAnswer;
+
+    // Constructors
+    public Exercise() {
+    }
+
+    public Exercise(String id, String conceptId, String question, List<String> options, String correctAnswer) {
+        this.id = id;
+        this.conceptId = conceptId;
+        this.question = question;
+        this.options = options;
+        this.correctAnswer = correctAnswer;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getConceptId() {
+        return conceptId;
+    }
+
+    public void setConceptId(String conceptId) {
+        this.conceptId = conceptId;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public List<String> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<String> options) {
+        this.options = options;
+    }
+
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+} 

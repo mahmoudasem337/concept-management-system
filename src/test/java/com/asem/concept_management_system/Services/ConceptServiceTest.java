@@ -1,0 +1,82 @@
+package com.asem.concept_management_system.Services;
+import com.asem.concept_management_system.Concept.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@ExtendWith(MockitoExtension.class)
+class ConceptServiceTest {
+
+    @Mock
+    private ConceptRepository conceptRepository;
+
+    @InjectMocks
+    private ConceptService conceptService;
+
+    @DisplayName("Get All Concepts Test")
+    @Test
+    void getAllConcepts() {
+        ConceptResponse cr1 = new ConceptResponse("Title 1", "Description 1", 1, ProgressStatus.NOT_STARTED);
+        ConceptResponse cr2 = new ConceptResponse("Title 2", "Description 2", 2,ProgressStatus.IN_PROGRESS);
+        List<ConceptResponse> result = new ArrayList<>();
+        result.add(cr1);
+        result.add(cr2);
+        Mockito.when(conceptRepository.findAllBy()).thenReturn(result);
+        List<ConceptResponse> concepts = conceptService.getAllConcepts();
+        assertEquals(2, concepts.size());
+    }
+
+    @DisplayName("Create Concept Test")
+    @Test
+    void createConcept() {
+        Concept concept = new Concept("1", "Title 1", "Description 1", 1,ProgressStatus.IN_PROGRESS);
+        conceptService.createConcept(concept);
+        Mockito.verify(conceptRepository, Mockito.times(1)).save(concept);
+    }
+
+    @DisplayName("Update Concept Test")
+    @Test
+    void updateConcept() {
+        Concept concept = new Concept("1", "Title 1", "Description 1", 1,ProgressStatus.NOT_STARTED);
+        Concept concept2 = new Concept("2", "Title 2", "Description 2", 2,ProgressStatus.IN_PROGRESS);
+        ConceptResponse conceptResponse = new ConceptResponse( concept2.getTitle(), concept2.getDescription(), concept2.getDifficultyLevel(),concept2.getStatus());
+        String id = concept.getId();
+        Mockito.when(conceptRepository.findById(id)).thenReturn(Optional.of(concept));
+        Mockito.when(conceptRepository.save(concept)).thenReturn(concept2);
+        ConceptResponse updatedConcept = conceptService.updateConcept(id, concept2);
+        assertEquals("Title 2", conceptResponse.getTitle());
+        assertEquals(2 , conceptResponse.getDifficultyLevel());
+    }
+
+    @DisplayName("Delete Concept Test")
+    @Test
+    void deleteConcept() {
+        String id = "1";
+        Mockito.when(conceptRepository.existsById(id)).thenReturn(true);
+        boolean isDeleted = conceptService.deleteConcept(id);
+        assertTrue(isDeleted);
+        Mockito.verify(conceptRepository, Mockito.times(1)).deleteById(id);
+    }
+
+    @DisplayName("Get Concept Test")
+    @Test
+    void getConceptByTitle() {
+        String title = "Redis";
+        Concept concept = new Concept("1", "Redis", "Description 1", 1,ProgressStatus.IN_PROGRESS);
+        ConceptResponse conceptResponse = new ConceptResponse( concept.getTitle(), concept.getDescription(), concept.getDifficultyLevel(),concept.getStatus());
+        Mockito.when(conceptRepository.findByTitle(title)).thenReturn(Optional.of(concept));
+        ConceptResponse retrievedConcept = conceptService.getConceptByTitle(title);
+        assertEquals(conceptResponse.getTitle(), retrievedConcept.getTitle());
+    }
+
+}

@@ -1,0 +1,56 @@
+package com.asem.concept_management_system.Service;
+import com.asem.conceptmanagementsystem.Model.ProgressStatus;
+import com.asem.conceptmanagementsystem.Model.UserProgress;
+import com.asem.conceptmanagementsystem.Repository.UserProgressRepository;
+import com.asem.conceptmanagementsystem.Repository.UserRepository;
+import com.asem.conceptmanagementsystem.DTO.AnalyticsDTO;
+import org.springframework.stereotype.Service;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+@Service
+public class AnalyticsService {
+    private final UserRepository userRepository;
+    private final UserProgressRepository userProgressRepository;
+    public AnalyticsService(UserRepository userRepository, UserProgressRepository userProgressRepository) {
+        this.userRepository = userRepository;
+        this.userProgressRepository = userProgressRepository;
+    }
+
+    public AnalyticsDTO getAnalytics() {
+        // Get total number of users
+        long totalUsers = userRepository.count();
+        // Get most completed concepts
+        Map<String, Long> mostCompletedConcepts = getMostCompletedConcepts();
+        // Get average time spent
+        Map<String, Double> averageTimeSpent = getDummyAverageTimeSpent();
+
+        return new AnalyticsDTO(totalUsers, mostCompletedConcepts, averageTimeSpent);
+    }
+
+    private Map<String, Long> getMostCompletedConcepts() {
+        // Get all completed concepts
+        List<String> completedConcepts = userProgressRepository.findAll().stream()
+                .filter(progress -> progress.getStatus().equals(ProgressStatus.COMPLETED))
+                .map(UserProgress::getConceptId)
+                .collect(Collectors.toList());
+
+        // Count occurrences of each concept
+        return completedConcepts.stream()
+                .collect(Collectors.groupingBy(
+                        conceptId -> conceptId,
+                        Collectors.counting()
+                ));
+    }
+
+    private Map<String, Double> getDummyAverageTimeSpent() {
+        // Generate dummy data for average time spent
+        Map<String, Double> dummyData = new HashMap<>();
+        dummyData.put("concept1", 45.5);
+        dummyData.put("concept2", 30.2);
+        dummyData.put("concept3", 60.8);
+        return dummyData;
+    }
+} 
