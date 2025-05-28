@@ -1,6 +1,6 @@
-# concept-management-system
+# CMS
 
-This project is an platform for manage learning concepts and providing quizzes in large number of topics.
+This project is an platform for managing learning process and providing quizzes to test your knowledge level.
 
 ## 📌 Overview
 
@@ -8,25 +8,25 @@ The system includes:
 - **Authentication** service using **Keycloak**.
 - **Quiz Service** for quizzes, it's integrated with external API (QuizAPI).
 - **Concept Service** for managing process of learning concepts.
-- All services are containerized with **Docker**.
 - **MongoDB** is used as a good solution for storing data.
 
 ## System Design
-![image](https://github.com/user-attachments/assets/a0d30e51-131b-40c5-832d-7a524a8ae0d5)
+![image](https://github.com/user-attachments/assets/7facbc0d-4c08-433c-8426-49426da3f87f)
 
- 
-## 🚀 Getting Started
+---
 
-### Prerequisites
-- Docker
-- Docker Compose
+## 🛠️ Prerequisites
+
+- [Java 24](https://www.oracle.com/java/technologies/downloads/)
+- [Maven](https://maven.apache.org/)
+- [MongoDB](https://www.mongodb.com/)
+- [Keycloak](https://www.keycloak.org/)
+
+---
+
 
 ### Running the Application
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/your-repo.git
-   cd your-repo
-
-2. Starting:
-   ```bash
-   docker-compose up --build
+   git clone https://github.com/mahmoudasem337/concept-management-system.git
+   cd concept-management-system
