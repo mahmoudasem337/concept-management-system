@@ -6,12 +6,11 @@ This project is an platform for managing learning process and providing quizzes 
 
 The system includes:
 - **Authentication** service using **Keycloak**.
-- **Quiz Service** for quizzes, it's integrated with external API (QuizAPI).
-- **Concept Service** for managing process of learning concepts.
-- **MongoDB** is used as a good solution for storing data.
+- **Quiz Feature** for quizzes, it's integrated with external API (QuizAPI).
+- **Concept Feature** for managing process of learning concepts and tracking progress.
 
 ## System Design
-![image](https://github.com/user-attachments/assets/7facbc0d-4c08-433c-8426-49426da3f87f)
+![image](https://github.com/user-attachments/assets/8d79a73b-807b-4edb-8195-66fbfbd6b545)
 
 ---
 
